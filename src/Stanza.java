@@ -168,11 +168,31 @@ public class Stanza {
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	public boolean removeAttrezzo(Attrezzo attrezzo) {
+	
+	
+	/*public boolean removeAttrezzo(Attrezzo attrezzo) {
 		// TODO da implementare
 		return false;
-	}
+	}*/
 
+	
+	public boolean removeAttrezzo(String nomeAttrezzo) {
+		boolean risultato = false; 
+		if (this.hasAttrezzo(nomeAttrezzo)) {
+			for (int i=0; i<this.numeroAttrezzi; i++) {
+				if (this.attrezzi[i].getNome().equals(nomeAttrezzo)) {
+					for (int j=i; j<this.numeroAttrezzi-1; j++) {
+						this.attrezzi[j] = this.attrezzi[j+1]; 
+					}
+					risultato = true; 
+					this.numeroAttrezzi--; 
+					this.attrezzi[this.numeroAttrezzi] = null; 
+					break; 
+				}
+			}
+		}
+		return risultato;
+	}
 
 	public String[] getDirezioni() {
 		String[] direzioni = new String[this.numeroStanzeAdiacenti];
