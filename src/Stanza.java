@@ -62,6 +62,7 @@ public class Stanza {
     		}
     }
 
+    
     /**
      * Restituisce la stanza adiacente nella direzione specificata
      * @param direzione
@@ -88,6 +89,13 @@ public class Stanza {
      */
     public String getDescrizione() {
         return this.toString();
+    }
+
+    public String[] getDirezioni() {
+    	String[] direzioni = new String[this.numeroStanzeAdiacenti];
+    	for(int i=0; i<this.numeroStanzeAdiacenti; i++)
+    		direzioni[i] = this.direzioni[i];
+    	return direzioni;
     }
 
     /**
@@ -194,11 +202,5 @@ public class Stanza {
 		return risultato;
 	}
 
-	public String[] getDirezioni() {
-		String[] direzioni = new String[this.numeroStanzeAdiacenti];
-	    for(int i=0; i<this.numeroStanzeAdiacenti; i++)
-	    	direzioni[i] = this.direzioni[i];
-	    return direzioni;
-    }
 
 }
