@@ -184,6 +184,7 @@ public class Stanza {
 	}*/
 
 	
+	
 	public boolean removeAttrezzo(String nomeAttrezzo) {
 		boolean risultato = false; 
 		if (this.hasAttrezzo(nomeAttrezzo)) {
