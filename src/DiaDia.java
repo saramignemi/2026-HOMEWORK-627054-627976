@@ -61,6 +61,10 @@ public class DiaDia {
 			this.vai(comandoDaEseguire.getParametro());
 		else if (comandoDaEseguire.getNome().equals("aiuto"))
 			this.aiuto();
+		else if (comandoDaEseguire.getNome().equals("prendi"))
+			this.prendi(comandoDaEseguire.getParametro()); 
+		else if (comandoDaEseguire.getNome().equals("posa"))
+			this.posa(comandoDaEseguire.getParametro()); 
 		else
 			System.out.println("Comando sconosciuto");
 		
@@ -105,6 +109,52 @@ public class DiaDia {
 			this.partita.setCfu(--cfu);
 		}
 		System.out.println(partita.getStanzaCorrente().getDescrizione());
+	}
+	
+	
+	/* Comando "prendi */
+	private void prendi(String nomeAttrezzo) {
+		
+		Attrezzo appoggio; 
+		Stanza stanzaCorrente = this.partita.getStanzaCorrente(); 
+		
+		if (stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
+			appoggio = stanzaCorrente.getAttrezzo(nomeAttrezzo); 
+			boolean nellaBorsa = this.partita.getGiocatore().getBorsa().addAttrezzo(appoggio); 
+			if (nellaBorsa) {
+				stanzaCorrente.removeAttrezzo(appoggio); // Ignoro il valore di ritorno dato che già controllo se la stanza ha l'attrezzo
+				System.out.println("Hai raccolto " + nomeAttrezzo + "!"); 
+			}
+			else {
+				System.out.println("La borsa è piena :("); 
+			}
+		}
+		else {
+			System.out.println("Questa stanza non contiene l'attrezzo che hai chiesto"); 
+		}
+	}
+	
+	/* Comando "posa" */
+	private void posa(String nomeAttrezzo) {
+		
+		Attrezzo appoggio; 
+		Stanza stanzaCorrente = this.partita.getStanzaCorrente(); 
+		Borsa borsa = this.partita.getGiocatore().getBorsa(); 
+		
+		if (borsa.hasAttrezzo(nomeAttrezzo)) {
+			appoggio = borsa.removeAttrezzo(nomeAttrezzo); 
+			boolean nellaStanza = stanzaCorrente.addAttrezzo(appoggio); 
+			if (nellaStanza) {
+				System.out.println("Hai posato " + nomeAttrezzo + "!"); 
+			}
+			else {
+				borsa.addAttrezzo(appoggio); 
+				System.out.println("La stanza è piena :("); 
+			}
+		}
+		else {
+			System.out.println("Questa stanza non contiene l'attrezzo che hai chiesto"); 
+		}
 	}
 
 	/**

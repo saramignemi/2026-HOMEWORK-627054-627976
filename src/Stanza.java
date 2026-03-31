@@ -185,19 +185,17 @@ public class Stanza {
 
 	
 	
-	public boolean removeAttrezzo(String nomeAttrezzo) {
+	public boolean removeAttrezzo(Attrezzo attrezzo) {
 		boolean risultato = false; 
-		if (this.hasAttrezzo(nomeAttrezzo)) {
-			for (int i=0; i<this.numeroAttrezzi; i++) {
-				if (this.attrezzi[i].getNome().equals(nomeAttrezzo)) {
-					for (int j=i; j<this.numeroAttrezzi-1; j++) {
-						this.attrezzi[j] = this.attrezzi[j+1]; 
-					}
-					risultato = true; 
-					this.numeroAttrezzi--; 
-					this.attrezzi[this.numeroAttrezzi] = null; 
-					break; 
+		for (int i=0; i<this.numeroAttrezzi; i++) {
+			if (this.attrezzi[i] == attrezzo) {
+				for (int j=i; j<this.numeroAttrezzi-1; j++) {
+					this.attrezzi[j] = this.attrezzi[j+1]; 
 				}
+				risultato = true; 
+				this.numeroAttrezzi--; 
+				this.attrezzi[this.numeroAttrezzi] = null; 
+				break; 
 			}
 		}
 		return risultato;

@@ -52,6 +52,10 @@ public class Partita {
 		return this.giocatore.getCfu(); 
 	}
 	
+	public Giocatore getGiocatore() {
+		return this.giocatore; 
+	}
+	
 	/**
 	 * Restituisce vero se e solo se la partita e' stata vinta
 	 * @return vero se partita vinta
