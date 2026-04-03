@@ -58,6 +58,8 @@ public class DiaDia {
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
 
+		if (comandoDaEseguire.getNome() == null) return false; 
+		
 		if (comandoDaEseguire.getNome().equals("fine")) {
 			this.fine(); 
 			return true;
@@ -103,16 +105,24 @@ public class DiaDia {
 	private void vai(String direzione) {
 		if(direzione==null)
 			System.out.println("Dove vuoi andare ?");
-		Stanza prossimaStanza = null;
-		prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
-		if (prossimaStanza == null)
-			System.out.println("Direzione inesistente");
 		else {
-			this.partita.setStanzaCorrente(prossimaStanza);
-			int cfu = this.partita.getCfu();
-			this.partita.setCfu(--cfu);
+			Stanza prossimaStanza = null;
+			prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
+			if (prossimaStanza == null)
+				System.out.println("Direzione inesistente");
+			else {
+				this.partita.setStanzaCorrente(prossimaStanza);
+				int cfu = this.partita.getCfu();
+				this.partita.setCfu(--cfu);	
+			}
 		}
-		System.out.println(partita.getStanzaCorrente().getDescrizione());
+		
+		if(!this.partita.getStanzaCorrente().getNome().equals("Biblioteca")) {
+			System.out.println(this.partita.getStanzaCorrente().getDescrizione());
+		}
+		else {
+			System.out.println("Complimenti, sei arrivato in " + this.partita.getStanzaVincente().getNome() + "."); 
+		}
 	}
 	
 	
@@ -121,6 +131,11 @@ public class DiaDia {
 		
 		Attrezzo appoggio; 
 		Stanza stanzaCorrente = this.partita.getStanzaCorrente(); 
+		
+		if (nomeAttrezzo == null) {
+			System.out.println("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
+			return;
+		}
 		
 		if (stanzaCorrente.hasAttrezzo(nomeAttrezzo)) {
 			appoggio = stanzaCorrente.getAttrezzo(nomeAttrezzo); 
@@ -135,6 +150,7 @@ public class DiaDia {
 		}
 		else {
 			System.out.println("Questa stanza non contiene l'attrezzo che hai chiesto"); 
+			System.out.println("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
 		}
 	}
 	
@@ -144,6 +160,11 @@ public class DiaDia {
 		Attrezzo appoggio; 
 		Stanza stanzaCorrente = this.partita.getStanzaCorrente(); 
 		Borsa borsa = this.partita.getGiocatore().getBorsa(); 
+		
+		if (nomeAttrezzo == null) {
+			System.out.println("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
+			return;
+		}
 		
 		if (borsa.hasAttrezzo(nomeAttrezzo)) {
 			appoggio = borsa.removeAttrezzo(nomeAttrezzo); 
@@ -157,7 +178,8 @@ public class DiaDia {
 			}
 		}
 		else {
-			System.out.println("Questa stanza non contiene l'attrezzo che hai chiesto"); 
+			System.out.println("La tua borsa non contiene l'attrezzo che hai chiesto"); 
+			System.out.println("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
 		}
 	}
 

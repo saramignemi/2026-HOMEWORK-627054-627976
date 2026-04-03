@@ -15,7 +15,7 @@ public class Borsa {
 	
 	public Borsa(int pesoMax) {
 		this.pesoMax = pesoMax;
-		this.attrezzi = new Attrezzo[10]; // speriamo bastino...
+		this.attrezzi = new Attrezzo[10]; // Speriamo bastino...
 		this.numeroAttrezzi = 0;
 	}
 	
