@@ -90,6 +90,10 @@ public class Stanza {
         return this.toString();
     }
 
+    /**
+     * Restituisce la lista di direzioni disponibili dalla stanza.
+     * @return array contenente le direzioni disponibili
+     */
     public String[] getDirezioni() {
     	String[] direzioni = new String[this.numeroStanzeAdiacenti];
     	for(int i=0; i<this.numeroStanzeAdiacenti; i++)
@@ -177,14 +181,6 @@ public class Stanza {
 	 * @param nomeAttrezzo
 	 * @return true se l'attrezzo e' stato rimosso, false altrimenti
 	 */
-	
-	
-	/*public boolean removeAttrezzo(Attrezzo attrezzo) {
-		// TODO da implementare
-		return false;
-	}*/
-
-	
 	
 	public boolean removeAttrezzo(Attrezzo attrezzo) {
 		boolean risultato = false; 

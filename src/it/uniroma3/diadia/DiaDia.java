@@ -126,7 +126,14 @@ public class DiaDia {
 	}
 	
 	
-	/* Comando "prendi */
+	/**
+	 * Funzione da eseguire dal comando prendi,
+	 * prende l'attrezzo dalla stanza corrente 
+	 * e lo mette nella borsa.
+	 * Se il nome non viene passato allora mostra 
+	 * tutti gli elementi della stanza.
+	 * @param nomeAttrezzo Il nome dell'attrezzo da prendere
+	 */
 	private void prendi(String nomeAttrezzo) {
 		
 		Attrezzo appoggio; 
@@ -154,7 +161,14 @@ public class DiaDia {
 		}
 	}
 	
-	/* Comando "posa" */
+	/**
+	 * Funzione da eseguire dal comando posa,
+	 * prende l'attrezzo dalla borsa 
+	 * e lo mette nella stanza corrente.
+	 * Se il nome non viene passato allora mostra 
+	 * tutti gli attrezzi della borsa.
+	 * @param nomeAttrezzo Il nome dell'attrezzo da posare
+	 */
 	private void posa(String nomeAttrezzo) {
 		
 		Attrezzo appoggio; 
