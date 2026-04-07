@@ -1,7 +1,5 @@
 package it.uniroma3.diadia;
 
-import java.util.Scanner;
-
 import it.uniroma3.diadia.ambienti.*;
 import it.uniroma3.diadia.attrezzi.*;
 import it.uniroma3.diadia.giocatore.*;
@@ -33,19 +31,19 @@ public class DiaDia {
 	static final private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa"};
 
 	private Partita partita;
-
-	public DiaDia() {
+	private IOConsole ioConsole;
+	
+	public DiaDia(IOConsole ioConsole) {
 		this.partita = new Partita();
+		this.ioConsole = ioConsole;
 	}
-
+	
 	public void gioca() {
 		String istruzione; 
-		Scanner scannerDiLinee;
 
-		System.out.println(MESSAGGIO_BENVENUTO);
-		scannerDiLinee = new Scanner(System.in);		
+		this.ioConsole.mostraMessaggio(MESSAGGIO_BENVENUTO);		
 		do		
-			istruzione = scannerDiLinee.nextLine();
+			istruzione = this.ioConsole.leggiRiga();
 		while (!processaIstruzione(istruzione));
 	}   
 
@@ -72,14 +70,14 @@ public class DiaDia {
 		else if (comandoDaEseguire.getNome().equals("posa"))
 			this.posa(comandoDaEseguire.getParametro()); 
 		else
-			System.out.println("Comando sconosciuto");
+			this.ioConsole.mostraMessaggio("Comando sconosciuto");
 		
 		if (this.partita.isFinita()) {
 			if (this.partita.vinta()) {
-				System.out.println("Hai vinto!");
+				this.ioConsole.mostraMessaggio("Hai vinto!");
 			}
 			else {
-				System.out.println("Mi dispiace, hai finito i cfu :("); 
+				this.ioConsole.mostraMessaggio("Mi dispiace, hai finito i cfu :("); 
 			}
 			return true;
 		}
@@ -93,9 +91,10 @@ public class DiaDia {
 	 * Stampa informazioni di aiuto.
 	 */
 	private void aiuto() {
+		String commands = "";
 		for(int i=0; i< elencoComandi.length; i++) 
-			System.out.print(elencoComandi[i]+" ");
-		System.out.println();
+			commands = commands.concat(elencoComandi[i].concat(" "));
+		this.ioConsole.mostraMessaggio(commands);
 	}
 
 	/**
@@ -104,12 +103,12 @@ public class DiaDia {
 	 */
 	private void vai(String direzione) {
 		if(direzione==null)
-			System.out.println("Dove vuoi andare ?");
+			this.ioConsole.mostraMessaggio("Dove vuoi andare ?");
 		else {
 			Stanza prossimaStanza = null;
 			prossimaStanza = this.partita.getStanzaCorrente().getStanzaAdiacente(direzione);
 			if (prossimaStanza == null)
-				System.out.println("Direzione inesistente");
+				this.ioConsole.mostraMessaggio("Direzione inesistente");
 			else {
 				this.partita.setStanzaCorrente(prossimaStanza);
 				int cfu = this.partita.getCfu();
@@ -118,10 +117,10 @@ public class DiaDia {
 		}
 		
 		if(!this.partita.getStanzaCorrente().getNome().equals("Biblioteca")) {
-			System.out.println(this.partita.getStanzaCorrente().getDescrizione());
+			this.ioConsole.mostraMessaggio(this.partita.getStanzaCorrente().getDescrizione());
 		}
 		else {
-			System.out.println("Complimenti, sei arrivato in " + this.partita.getStanzaVincente().getNome() + "."); 
+			this.ioConsole.mostraMessaggio("Complimenti, sei arrivato in " + this.partita.getStanzaVincente().getNome() + "."); 
 		}
 	}
 	
@@ -140,7 +139,7 @@ public class DiaDia {
 		Stanza stanzaCorrente = this.partita.getStanzaCorrente(); 
 		
 		if (nomeAttrezzo == null) {
-			System.out.println("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
+			this.ioConsole.mostraMessaggio("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
 			return;
 		}
 		
@@ -149,15 +148,15 @@ public class DiaDia {
 			boolean nellaBorsa = this.partita.getGiocatore().getBorsa().addAttrezzo(appoggio); 
 			if (nellaBorsa) {
 				stanzaCorrente.removeAttrezzo(appoggio); // Ignoro il valore di ritorno dato che già controllo se la stanza ha l'attrezzo
-				System.out.println("Hai raccolto " + nomeAttrezzo + "!"); 
+				this.ioConsole.mostraMessaggio("Hai raccolto " + nomeAttrezzo + "!"); 
 			}
 			else {
-				System.out.println("La borsa è piena :("); 
+				this.ioConsole.mostraMessaggio("La borsa è piena :("); 
 			}
 		}
 		else {
-			System.out.println("Questa stanza non contiene l'attrezzo che hai chiesto"); 
-			System.out.println("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
+			this.ioConsole.mostraMessaggio("Questa stanza non contiene l'attrezzo che hai chiesto"); 
+			this.ioConsole.mostraMessaggio("Ecco gli attrezzi disponibili\n" + this.partita.getStanzaCorrente().getDescrizione()); 
 		}
 	}
 	
@@ -176,7 +175,7 @@ public class DiaDia {
 		Borsa borsa = this.partita.getGiocatore().getBorsa(); 
 		
 		if (nomeAttrezzo == null) {
-			System.out.println("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
+			this.ioConsole.mostraMessaggio("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
 			return;
 		}
 		
@@ -184,16 +183,16 @@ public class DiaDia {
 			appoggio = borsa.removeAttrezzo(nomeAttrezzo); 
 			boolean nellaStanza = stanzaCorrente.addAttrezzo(appoggio); 
 			if (nellaStanza) {
-				System.out.println("Hai posato " + nomeAttrezzo + "!"); 
+				this.ioConsole.mostraMessaggio("Hai posato " + nomeAttrezzo + "!"); 
 			}
 			else {
 				borsa.addAttrezzo(appoggio); 
-				System.out.println("La stanza è piena :("); 
+				this.ioConsole.mostraMessaggio("La stanza è piena :("); 
 			}
 		}
 		else {
-			System.out.println("La tua borsa non contiene l'attrezzo che hai chiesto"); 
-			System.out.println("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
+			this.ioConsole.mostraMessaggio("La tua borsa non contiene l'attrezzo che hai chiesto"); 
+			this.ioConsole.mostraMessaggio("Ecco gli attrezzi nella borsa\n" + this.partita.getGiocatore().getBorsa().toString()); 
 		}
 	}
 
@@ -201,11 +200,12 @@ public class DiaDia {
 	 * Comando "Fine".
 	 */
 	private void fine() {
-		System.out.println("Grazie di aver giocato!");  // si desidera smettere
+		this.ioConsole.mostraMessaggio("Grazie di aver giocato!");  // si desidera smettere
 	}
 
 	public static void main(String[] argc) {
-		DiaDia gioco = new DiaDia();
+		IOConsole ioConsole = new IOConsole(); 
+		DiaDia gioco = new DiaDia(ioConsole);
 		gioco.gioca();
 	}
 }
