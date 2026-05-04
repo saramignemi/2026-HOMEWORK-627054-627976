@@ -16,12 +16,12 @@ import java.util.Scanner;
  * @version base
  */
 
-public class Comando {
+public class Comando_old {
 
     private String nome;
     private String parametro;
 
-    public Comando(String istruzione) {
+    public Comando_old(String istruzione) {
 		Scanner scannerDiParole = new Scanner(istruzione);
 
 		// prima parola: nome del comando
