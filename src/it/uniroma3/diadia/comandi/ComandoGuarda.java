@@ -13,7 +13,7 @@ public class ComandoGuarda implements Comando {
 	@Override
 	public void esegui(Partita partita) {
 		this.io.mostraMessaggio("Posizione attuale:");
-		this.io.mostraMessaggio(partita.getStanzaCorrente().toString());
+		this.io.mostraMessaggio(partita.getStanzaCorrente().getDescrizione());
 		this.io.mostraMessaggio("\nContenuto della borsa:");
 		this.io.mostraMessaggio(partita.getGiocatore().getBorsa().toString());
 		this.io.mostraMessaggio("\nCFU rimasti: " + partita.getCfu());

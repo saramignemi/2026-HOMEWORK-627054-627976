@@ -26,6 +26,8 @@ public class ComandoVai implements Comando {
 			if (prossimaStanza == null)
 				this.io.mostraMessaggio("Direzione inesistente");
 			else {
+				if (prossimaStanza == partita.getStanzaCorrente())
+					this.io.mostraMessaggio("Questa direzione è bloccata");
 				partita.setStanzaCorrente(prossimaStanza);
 				int cfu = partita.getCfu();
 				partita.setCfu(--cfu);	
