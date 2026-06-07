@@ -21,8 +21,8 @@ public class StanzaMagicaTest {
 	}
 	@Test
 	public void testAggiuntaAttrezzoNull() {
-		this.stanza.addAttrezzo(null);
-		assertEquals(null, this.stanza.getAttrezzi()[0]);
+	    this.stanza.addAttrezzo(null);
+	    assertTrue(this.stanza.getAttrezzi().isEmpty());
 	}
 
 	@Test

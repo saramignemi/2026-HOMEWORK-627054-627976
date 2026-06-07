@@ -19,7 +19,7 @@ public class StanzaBloccata extends Stanza {
 	
 	@Override
 	public Stanza getStanzaAdiacente(String direzione) {
-		if (direzione == null | (direzione.equals(this.direzioneBloccata) && !this.hasAttrezzo(nomeAttrezzoApertura))) return this;
+		if (direzione == null || (direzione.equals(this.direzioneBloccata) && !this.hasAttrezzo(nomeAttrezzoApertura))) return this;
 		else return super.getStanzaAdiacente(direzione);
 	}
 	
@@ -36,7 +36,7 @@ public class StanzaBloccata extends Stanza {
     				else risultato.append(" bloccata[" + direzione + "] -> richiede " + this.nomeAttrezzoApertura + ",");
     			else risultato.append(" " + direzione);
     	risultato.append("\nAttrezzi nella stanza: ");
-    	for (Attrezzo attrezzo : this.getAttrezzi()) {
+    	for (Attrezzo attrezzo : this.getAttrezzi().values()) {
     		if (attrezzo != null) {
     			risultato.append(attrezzo.toString()+" ");
     		}
