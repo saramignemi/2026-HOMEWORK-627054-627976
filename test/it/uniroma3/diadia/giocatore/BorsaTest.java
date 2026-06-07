@@ -1,6 +1,10 @@
 package it.uniroma3.diadia.giocatore;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import it.uniroma3.diadia.attrezzi.*;
@@ -32,7 +36,7 @@ public class BorsaTest {
 	@Test
 	public void testAddAttrezzoPiena() {
 		for (int i=0; i<10; i++) {
-			Attrezzo nuovo = new Attrezzo("nuovo", 1);
+			Attrezzo nuovo = new Attrezzo("nuovo" + i, 1);
 			this.borsa.addAttrezzo(nuovo);
 		}
 		Attrezzo eccesso = new Attrezzo("eccesso", 8);
@@ -55,5 +59,25 @@ public class BorsaTest {
 	@Test
 	public void testToStringVuota() {
 		assertEquals("Borsa vuota", this.borsa.toString());
+	}
+	
+	@Test
+	public void testSortingPeso() {
+		Attrezzo peso5 = new Attrezzo("peso 5", 5);
+		Attrezzo peso1 = new Attrezzo("peso 1", 1);
+		Attrezzo peso3 = new Attrezzo("peso 3", 3);
+		this.borsa.addAttrezzo(peso5);
+		this.borsa.addAttrezzo(peso1);
+		this.borsa.addAttrezzo(peso3);
+		
+		List<Attrezzo> sortedList = new ArrayList<Attrezzo>();
+		sortedList.add(peso1);
+		sortedList.add(peso3);
+		sortedList.add(peso5);
+		
+		List<Attrezzo> customList = this.borsa.getContenutoOrdinatoPerPeso();
+		assertEquals(sortedList, customList);
+		
+		
 	}
 }
