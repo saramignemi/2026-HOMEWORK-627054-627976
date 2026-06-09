@@ -1,5 +1,7 @@
 package it.uniroma3.diadia.comandi;
 
-public interface FabbricaDiComandi {
+import it.uniroma3.diadia.IO;
 
+public interface FabbricaDiComandi {
+	public Comando costruisciComando(String istruzione, IO io) throws Exception;
 }
