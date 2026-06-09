@@ -41,6 +41,8 @@ public class StanzaBloccata extends Stanza {
     			risultato.append(attrezzo.toString()+" ");
     		}
     	}
+    	if (super.getPersonaggio() != null)
+    		risultato.append("\nPersonaggio: " + super.getPersonaggio());
     	return risultato.toString();
 	}
 }
