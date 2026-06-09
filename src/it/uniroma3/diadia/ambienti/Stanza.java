@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
 
 /**
  * Classe Stanza - una stanza in un gioco di ruolo.
@@ -23,6 +24,8 @@ public class Stanza {
     private Map<String, Attrezzo> attrezzi;
     
     private Map<String, Stanza> stanzeAdiacenti;
+
+	private AbstractPersonaggio personaggio;
     
     /**
      * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -82,7 +85,14 @@ public class Stanza {
     public Map<String, Attrezzo> getAttrezzi() {
         return this.attrezzi;
     }
+    
+    public void setAttrezzi (Map<String, Attrezzo> attrezzi) {
+    	this.attrezzi = attrezzi;
+    }
 
+    public void setPersonaggio(AbstractPersonaggio personaggio) {
+    	this.personaggio = personaggio;
+    }
     /**
      * Mette un attrezzo nella stanza.
      * @param attrezzo l'attrezzo da mettere nella stanza.
@@ -111,6 +121,8 @@ public class Stanza {
     			risultato.append(attrezzo.toString()+" ");
     		}
     	}
+    	if (this.personaggio != null)
+    		risultato.append("\nPersonaggio: " + this.personaggio);
     	return risultato.toString();
     }
 
@@ -129,7 +141,7 @@ public class Stanza {
      * 		   null se l'attrezzo non e' presente.
 	 */
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
-	    return this.attrezzi.get(nome);
+	    return this.attrezzi.get(nomeAttrezzo);
 	}
 
 	/**
@@ -140,5 +152,10 @@ public class Stanza {
 	
 	public boolean removeAttrezzo(Attrezzo attrezzo) {
 		return this.attrezzi.remove(attrezzo.getNome()) != null;
+	}
+
+	public AbstractPersonaggio getPersonaggio() {
+		return this.personaggio;
+		
 	}
 }
