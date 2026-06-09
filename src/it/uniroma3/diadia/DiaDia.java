@@ -1,7 +1,11 @@
 package it.uniroma3.diadia;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
+import it.uniroma3.diadia.personaggi.*;
 
 
 /**
@@ -34,15 +38,15 @@ public class DiaDia {
 	private Partita partita;
 	private IO io;
 	
-	public DiaDia(IO io) {
-		this.partita = new Partita();
+	public DiaDia(IO io, Labirinto lab) {
+		this.partita = new Partita(lab);
 		this.io = io;
 	}
 	
-	public void gioca() {
+	public void gioca() throws Exception {
 		String istruzione; 
-
-		this.io.mostraMessaggio(MESSAGGIO_BENVENUTO);		
+		this.io.mostraMessaggio(MESSAGGIO_BENVENUTO);
+		this.io.mostraMessaggio("\n"+ this.partita.getStanzaCorrente().getDescrizione());
 		do		
 			istruzione = this.io.leggiRiga();
 		while (!processaIstruzione(istruzione));
@@ -53,10 +57,11 @@ public class DiaDia {
 	 * Processa una istruzione 
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
+	 * @throws Exception 
 	 */
-	private boolean processaIstruzione(String istruzione) {
+	private boolean processaIstruzione(String istruzione) throws Exception {
 		Comando comandoDaEseguire;
-		FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica();
+		FabbricaDiComandiRiflessiva factory = new FabbricaDiComandiRiflessiva();
 		comandoDaEseguire = factory.costruisciComando(istruzione, this.io);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
@@ -69,9 +74,65 @@ public class DiaDia {
 		}
 	
 
-	public static void main(String[] argc) {
+	public static void main(String[] argc) throws Exception {
 		IO io = new IOConsole(); 
-		DiaDia gioco = new DiaDia(io);
+		Labirinto labirinto = new LabirintoBuilder()
+
+			    // stanze
+			    .addStanzaBloccata("Atrio", "nord")          // StanzaBloccata
+			    .addStanzaBuia("Aula N11")                   // StanzaBuia
+			    .addStanza("Aula N10")                       // Stanza normale
+			    .addStanza("Laboratorio Campus")
+			    .addStanza("Biblioteca")
+
+			    // iniziale e vincente
+			    .addStanzaIniziale("Atrio")
+			    .addStanzaVincente("Biblioteca")
+
+			    // adiacenze (uguali all’originale)
+			    .addAdiacenza("Atrio", "Biblioteca", "nord")
+			    .addAdiacenza("Atrio", "Aula N11", "est")
+			    .addAdiacenza("Atrio", "Aula N10", "sud")
+			    .addAdiacenza("Atrio", "Laboratorio Campus", "ovest")
+
+			    .addAdiacenza("Aula N11", "Laboratorio Campus", "est")
+			    .addAdiacenza("Aula N11", "Atrio", "ovest")
+
+			    .addAdiacenza("Aula N10", "Atrio", "nord")
+			    .addAdiacenza("Aula N10", "Aula N11", "est")
+			    .addAdiacenza("Aula N10", "Laboratorio Campus", "ovest")
+
+			    .addAdiacenza("Laboratorio Campus", "Atrio", "est")
+			    .addAdiacenza("Laboratorio Campus", "Aula N11", "ovest")
+
+			    .addAdiacenza("Biblioteca", "Atrio", "sud")
+
+			    // attrezzi
+			    .inStanza("Aula N10")
+			    .addAttrezzo("lanterna", 3)
+
+			    .inStanza("Atrio")
+			    .addAttrezzo("osso", 1)
+
+			    .inStanza("Laboratorio Campus")
+			    .addAttrezzo("pc", 2)
+
+			    .inStanza("Aula N11")
+			    .addAttrezzo("passepartout", 1)
+
+			    // personaggi
+			    .inStanza("Atrio")
+			    .addCane("Buddy")
+			    
+			    .inStanza("Laboratorio Campus")
+			    .addMago("Saruman")
+			    
+			    .inStanza("Aula N10")
+			    .addStrega("Kureha")
+			    // build finale
+			    .getLabirinto();
+		
+		DiaDia gioco = new DiaDia(io, labirinto);
 		gioco.gioca();
 	}
 }

@@ -27,6 +27,12 @@ public class Partita {
 		this.finita = false;
 	}
 	
+	public Partita(Labirinto lab){
+		this.giocatore = new Giocatore(); 
+		this.labirinto = lab; 
+		this.finita = false;
+	}
+	
 	/**
 	 * Imposta la partita come finita
 	 */
@@ -34,6 +40,9 @@ public class Partita {
 		this.finita = true;
 	}
 	
+	public void setLabirinto(Labirinto lab) {
+		this.labirinto = lab;
+	}
 	/**
 	 * Imposta la stanza corrente del labirinto
 	 * @param stanzaCorrente La {@link Stanza stanza} da impostare come corrente
