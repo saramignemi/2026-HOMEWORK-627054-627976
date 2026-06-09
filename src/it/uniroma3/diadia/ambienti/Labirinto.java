@@ -71,6 +71,12 @@ public class Labirinto {
 		this.stanzaVincente = biblioteca;	
 	}
 	
+	public Labirinto(Stanza stanzaIniziale, Stanza stanzaFinale) {
+		this.stanzaIniziale = stanzaIniziale;
+		this.stanzaVincente = stanzaFinale;
+		this.stanzaCorrente = stanzaIniziale;
+	}
+	
 	/**
 	 * Imposta la stanza corrente del labirinto
 	 * @param stanzaCorrente la stanza da impostare come corrente
