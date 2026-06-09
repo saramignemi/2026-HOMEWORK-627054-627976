@@ -1,14 +1,17 @@
 package it.uniroma3.diadia.giocatore;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-
+import it.uniroma3.diadia.attrezzi.ComparatoreAttrezziNome;
 
 /**
  * Una classe che modella la borsa del giocatore, 
@@ -60,6 +63,9 @@ public class Borsa {
 		return this.pesoMax;
 	}
 	
+	public Collection<Attrezzo> getAttrezzi(){
+		return this.attrezzi.values();
+	}
 	/**
 	 * Ritorna il riferimento a un attrezzo della borsa 
 	 * in base al nome, passato come parametro
@@ -132,7 +138,27 @@ public class Borsa {
 	}
 	
 	public SortedSet<Attrezzo> getContenutoOrdinatoPerNome(){
-		SortedSet<Attrezzo> out = new TreeSet<Attrezzo>();
-		// creare nuovo comparator per attrezzi che ordina per nome 
+		ComparatoreAttrezziNome comparatore = new ComparatoreAttrezziNome();
+		SortedSet<Attrezzo> out = new TreeSet<Attrezzo>(comparatore);
+		out.addAll(this.attrezzi.values());
+		return out;
+	}
+	
+	public Map<Integer, Set<Attrezzo>> getContenutoRaggruppatoPerPeso(){
+		Map<Integer, Set<Attrezzo>> out = new HashMap<Integer, Set<Attrezzo>>();
+		for (Attrezzo a : this.attrezzi.values()) {
+			Set<Attrezzo> temp = out.get(a.getPeso());
+			if (temp == null) {
+				temp = new HashSet<Attrezzo>();
+				out.put(a.getPeso(), temp);
+			}
+			temp.add(a);
+		}
+		return out;
+	}
+	
+	public SortedSet<Attrezzo> getSortedSetOrdinatoPerPeso(){
+		SortedSet<Attrezzo> out = new TreeSet<Attrezzo>(this.attrezzi.values());
+		return out;
 	}
 }
