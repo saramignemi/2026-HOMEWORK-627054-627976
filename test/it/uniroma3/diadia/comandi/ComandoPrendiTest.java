@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IOFake;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
@@ -17,7 +17,7 @@ public class ComandoPrendiTest {
     @Before
     public void setUp() {
         this.prendi = new ComandoPrendi();
-        this.prendi.setIO(new IOConsole());
+        this.prendi.setIO(new IOFake());
         this.partita = new Partita();
     }
 

@@ -23,7 +23,7 @@ public class Partita {
 	 */
 	public Partita(){
 		this.giocatore = new Giocatore(); 
-		this.labirinto = new Labirinto(); 
+		this.labirinto = null; 
 		this.finita = false;
 	}
 	

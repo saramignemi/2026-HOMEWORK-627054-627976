@@ -6,17 +6,17 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 
 public class DiaDiaTest {
 
 	private IO io;
 	private DiaDia partita;
-	private Labirinto labirinto = new LabirintoBuilder()
+	private Labirinto labirinto = Labirinto.newBuilder()
 
 		    // stanze
-		    .addStanzaBloccata("Atrio", "nord")          // StanzaBloccata
+		    .addStanzaBloccata("Atrio", Direzione.nord)          // StanzaBloccata
 		    .addStanzaBuia("Aula N11")                   // StanzaBuia
 		    .addStanza("Aula N10")                       // Stanza normale
 		    .addStanza("Laboratorio Campus")
@@ -27,22 +27,22 @@ public class DiaDiaTest {
 		    .addStanzaVincente("Biblioteca")
 
 		    // adiacenze (uguali all’originale)
-		    .addAdiacenza("Atrio", "Biblioteca", "nord")
-		    .addAdiacenza("Atrio", "Aula N11", "est")
-		    .addAdiacenza("Atrio", "Aula N10", "sud")
-		    .addAdiacenza("Atrio", "Laboratorio Campus", "ovest")
+		    .addAdiacenza("Atrio", "Biblioteca", Direzione.nord)
+		    .addAdiacenza("Atrio", "Aula N11", Direzione.est)
+		    .addAdiacenza("Atrio", "Aula N10", Direzione.sud)
+		    .addAdiacenza("Atrio", "Laboratorio Campus", Direzione.ovest)
 
-		    .addAdiacenza("Aula N11", "Laboratorio Campus", "est")
-		    .addAdiacenza("Aula N11", "Atrio", "ovest")
+		    .addAdiacenza("Aula N11", "Laboratorio Campus", Direzione.est)
+		    .addAdiacenza("Aula N11", "Atrio", Direzione.ovest)
 
-		    .addAdiacenza("Aula N10", "Atrio", "nord")
-		    .addAdiacenza("Aula N10", "Aula N11", "est")
-		    .addAdiacenza("Aula N10", "Laboratorio Campus", "ovest")
+		    .addAdiacenza("Aula N10", "Atrio", Direzione.nord)
+		    .addAdiacenza("Aula N10", "Aula N11", Direzione.est)
+		    .addAdiacenza("Aula N10", "Laboratorio Campus", Direzione.ovest)
 
-		    .addAdiacenza("Laboratorio Campus", "Atrio", "est")
-		    .addAdiacenza("Laboratorio Campus", "Aula N11", "ovest")
+		    .addAdiacenza("Laboratorio Campus", "Atrio", Direzione.est)
+		    .addAdiacenza("Laboratorio Campus", "Aula N11", Direzione.ovest)
 
-		    .addAdiacenza("Biblioteca", "Atrio", "sud")
+		    .addAdiacenza("Biblioteca", "Atrio", Direzione.sud)
 
 		    // attrezzi
 		    .inStanza("Aula N10")

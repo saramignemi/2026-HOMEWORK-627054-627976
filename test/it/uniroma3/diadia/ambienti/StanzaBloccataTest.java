@@ -13,24 +13,24 @@ public class StanzaBloccataTest {
 	
 	@Before
 	public void setUp() {
-		this.stanza = new StanzaBloccata("stanza", "test", "nord");
+		this.stanza = new StanzaBloccata("stanza", "test", Direzione.nord);
 	}
 
 	@Test
 	public void testVaiBloccato() {
-		assertSame(this.stanza, this.stanza.getStanzaAdiacente("nord"));
+		assertSame(this.stanza, this.stanza.getStanzaAdiacente(Direzione.nord));
 	}
 
 	@Test
 	public void testVaiSbloccato() {
 		this.stanza.addAttrezzo(new Attrezzo("test", 1));
-		assertEquals(null, this.stanza.getStanzaAdiacente("nord"));
+		assertEquals(null, this.stanza.getStanzaAdiacente(Direzione.nord));
 	}
 
 	@Test
 	public void testVaiBloccatoConAttrezzo() {
 		this.stanza.addAttrezzo(new Attrezzo("sbagliato", 1));
-		assertSame(this.stanza, this.stanza.getStanzaAdiacente("nord"));
+		assertSame(this.stanza, this.stanza.getStanzaAdiacente(Direzione.nord));
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import it.uniroma3.diadia.Proprieta;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.attrezzi.ComparatoreAttrezziNome;
 
@@ -25,7 +26,6 @@ import it.uniroma3.diadia.attrezzi.ComparatoreAttrezziNome;
  */
 public class Borsa {
 	
-	public final static int DEFAULT_PESO_MAX_BORSA = 10;
 	private Map<String, Attrezzo> attrezzi;		// Uso una mappa altrimenti non posso fare una ricerca in tempo costante
 	private int pesoMax;
 	
@@ -33,7 +33,7 @@ public class Borsa {
 	 * Crea una borsa con peso massimo standard
 	 */
 	public Borsa() {
-		this(DEFAULT_PESO_MAX_BORSA);
+	    this(Proprieta.getInstance().getPesoMaxBorsa()); 
 	}
 	
 	/**

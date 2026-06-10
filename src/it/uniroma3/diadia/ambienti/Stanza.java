@@ -23,7 +23,7 @@ public class Stanza {
 	
     private Map<String, Attrezzo> attrezzi;
     
-    private Map<String, Stanza> stanzeAdiacenti;
+    private Map<Direzione, Stanza> stanzeAdiacenti;
 
 	private AbstractPersonaggio personaggio;
     
@@ -33,7 +33,7 @@ public class Stanza {
      */
     public Stanza(String nome) {
         this.nome = nome;
-        this.stanzeAdiacenti = new HashMap<String, Stanza>();
+        this.stanzeAdiacenti = new HashMap<Direzione, Stanza>();
         this.attrezzi = new HashMap<String, Attrezzo>();
     }
 
@@ -43,14 +43,14 @@ public class Stanza {
      * @param direzione direzione in cui sara' posta la stanza adiacente.
      * @param stanza stanza adiacente nella direzione indicata dal primo parametro.
      */
-    public void impostaStanzaAdiacente(String direzione, Stanza stanza) {
+    public void impostaStanzaAdiacente(Direzione direzione, Stanza stanza) {
         this.stanzeAdiacenti.put(direzione, stanza);
     }
     /**
      * Restituisce la stanza adiacente nella direzione specificata
      * @param direzione
      */
-	public Stanza getStanzaAdiacente(String direzione) {
+	public Stanza getStanzaAdiacente(Direzione direzione) {
         return this.stanzeAdiacenti.get(direzione);
 	}
 
@@ -74,7 +74,7 @@ public class Stanza {
      * Restituisce la lista di direzioni disponibili dalla stanza.
      * @return array contenente le direzioni disponibili
      */
-    public Set<String> getDirezioni() {
+    public Set<Direzione> getDirezioni() {
     	return this.stanzeAdiacenti.keySet();
     }
 
@@ -112,7 +112,7 @@ public class Stanza {
     	StringBuilder risultato = new StringBuilder();
     	risultato.append(this.nome);
     	risultato.append("\nUscite: ");
-    	for (String direzione : this.getDirezioni())
+    	for (Direzione direzione : this.getDirezioni())
     		if (direzione!=null)
     			risultato.append(" " + direzione);
     	risultato.append("\nAttrezzi nella stanza: ");

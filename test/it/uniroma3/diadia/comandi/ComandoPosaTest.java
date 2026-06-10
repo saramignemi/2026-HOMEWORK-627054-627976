@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IOFake;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
@@ -17,7 +17,7 @@ public class ComandoPosaTest {
     @Before
     public void setUp() {
         this.posa = new ComandoPosa();
-        this.posa.setIO(new IOConsole());
+        this.posa.setIO(new IOFake());
         this.partita = new Partita();
 
         this.partita.getGiocatore()

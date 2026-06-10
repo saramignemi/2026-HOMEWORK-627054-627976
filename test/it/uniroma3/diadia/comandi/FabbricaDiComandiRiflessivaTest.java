@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import it.uniroma3.diadia.IO;
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IOFake;
 
 public class FabbricaDiComandiRiflessivaTest {
 
@@ -14,7 +14,7 @@ public class FabbricaDiComandiRiflessivaTest {
     @Before
     public void setUp() {
         this.fabbrica = new FabbricaDiComandiRiflessiva();
-        this.io = new IOConsole();
+        this.io = new IOFake();
     }
 
     @Test

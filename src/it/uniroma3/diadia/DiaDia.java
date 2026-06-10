@@ -1,11 +1,11 @@
 package it.uniroma3.diadia;
 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
-import it.uniroma3.diadia.personaggi.*;
 
 
 /**
@@ -65,8 +65,7 @@ public class DiaDia {
 		comandoDaEseguire = factory.costruisciComando(istruzione, this.io);
 		comandoDaEseguire.esegui(this.partita);
 		if (this.partita.vinta())
-
-		io.mostraMessaggio("Hai vinto!");
+			io.mostraMessaggio("Hai vinto!");
 		if (this.partita.getCfu() <= 0)
 			io.mostraMessaggio("Hai esaurito i CFU...");
 
@@ -75,64 +74,22 @@ public class DiaDia {
 	
 
 	public static void main(String[] argc) throws Exception {
-		IO io = new IOConsole(); 
-		Labirinto labirinto = new LabirintoBuilder()
-
-			    // stanze
-			    .addStanzaBloccata("Atrio", "nord")          // StanzaBloccata
-			    .addStanzaBuia("Aula N11")                   // StanzaBuia
-			    .addStanza("Aula N10")                       // Stanza normale
-			    .addStanza("Laboratorio Campus")
-			    .addStanza("Biblioteca")
-
-			    // iniziale e vincente
-			    .addStanzaIniziale("Atrio")
-			    .addStanzaVincente("Biblioteca")
-
-			    // adiacenze (uguali all’originale)
-			    .addAdiacenza("Atrio", "Biblioteca", "nord")
-			    .addAdiacenza("Atrio", "Aula N11", "est")
-			    .addAdiacenza("Atrio", "Aula N10", "sud")
-			    .addAdiacenza("Atrio", "Laboratorio Campus", "ovest")
-
-			    .addAdiacenza("Aula N11", "Laboratorio Campus", "est")
-			    .addAdiacenza("Aula N11", "Atrio", "ovest")
-
-			    .addAdiacenza("Aula N10", "Atrio", "nord")
-			    .addAdiacenza("Aula N10", "Aula N11", "est")
-			    .addAdiacenza("Aula N10", "Laboratorio Campus", "ovest")
-
-			    .addAdiacenza("Laboratorio Campus", "Atrio", "est")
-			    .addAdiacenza("Laboratorio Campus", "Aula N11", "ovest")
-
-			    .addAdiacenza("Biblioteca", "Atrio", "sud")
-
-			    // attrezzi
-			    .inStanza("Aula N10")
-			    .addAttrezzo("lanterna", 3)
-
-			    .inStanza("Atrio")
-			    .addAttrezzo("osso", 1)
-
-			    .inStanza("Laboratorio Campus")
-			    .addAttrezzo("pc", 2)
-
-			    .inStanza("Aula N11")
-			    .addAttrezzo("passepartout", 1)
-
-			    // personaggi
-			    .inStanza("Atrio")
-			    .addCane("Buddy")
-			    
-			    .inStanza("Laboratorio Campus")
-			    .addMago("Saruman")
-			    
-			    .inStanza("Aula N10")
-			    .addStrega("Kureha")
-			    // build finale
-			    .getLabirinto();
-		
-		DiaDia gioco = new DiaDia(io, labirinto);
-		gioco.gioca();
+		// Scanner creato una volta sola qui nel main, chiuso automaticamente
+		// a fine partita dal try-with-resources — System.in non viene mai
+		// chiuso prematuramente da leggiRiga()
+		try (Scanner scanner = new Scanner(System.in)) {
+			IO io = new IOConsole(scanner);
+			try {
+				CaricatoreLabirinto caricatore = new CaricatoreLabirinto("default");
+				Labirinto labirinto = caricatore.carica();
+				DiaDia gioco = new DiaDia(io, labirinto);
+				gioco.gioca();
+			} catch (FileNotFoundException e) {
+				System.err.println("File labirinto non trovato: " + e.getMessage());
+			} catch (FormatoFileNonValidoException e) {
+				System.err.println("Errore nel file: " + e.getMessage());
+			}
+		}
 	}
+
 }

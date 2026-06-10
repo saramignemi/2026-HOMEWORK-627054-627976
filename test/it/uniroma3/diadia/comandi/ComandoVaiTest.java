@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IOFake;
 import it.uniroma3.diadia.Partita;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+import it.uniroma3.diadia.ambienti.Direzione;
+import it.uniroma3.diadia.ambienti.Labirinto;
 
 public class ComandoVaiTest {
 
@@ -16,14 +17,14 @@ public class ComandoVaiTest {
     @Before
     public void setUp() {
         this.vai = new ComandoVai();
-        this.vai.setIO(new IOConsole());
+        this.vai.setIO(new IOFake());
     }
 
     @Test
     public void testMonolocale() {
 
         Partita partita = new Partita(
-            new LabirintoBuilder()
+            Labirinto.newBuilder()
                 .addStanzaIniziale("Atrio")
                 .addStanzaVincente("Atrio")
                 .getLabirinto()
@@ -39,12 +40,12 @@ public class ComandoVaiTest {
     public void testBilocale() {
 
         Partita partita = new Partita(
-            new LabirintoBuilder()
+            Labirinto.newBuilder()
                 .addStanzaIniziale("Atrio")
                 .addStanza("Aula")
                 .addStanzaVincente("Aula")
-                .addAdiacenza("Atrio", "Aula", "est")
-                .addAdiacenza("Aula", "Atrio", "ovest")
+                .addAdiacenza("Atrio", "Aula", Direzione.est)
+                .addAdiacenza("Aula", "Atrio", Direzione.ovest)
                 .getLabirinto()
         );
 
@@ -58,12 +59,12 @@ public class ComandoVaiTest {
     public void testTrilocale() {
 
         Partita partita = new Partita(
-            new LabirintoBuilder()
+            Labirinto.newBuilder()
                 .addStanzaIniziale("Atrio")
                 .addStanza("Aula")
                 .addStanzaVincente("Biblioteca")
-                .addAdiacenza("Atrio", "Aula", "est")
-                .addAdiacenza("Aula", "Biblioteca", "nord")
+                .addAdiacenza("Atrio", "Aula", Direzione.est)
+                .addAdiacenza("Aula", "Biblioteca", Direzione.nord)
                 .getLabirinto()
         );
 

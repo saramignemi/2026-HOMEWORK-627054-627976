@@ -1,0 +1,8 @@
+Stanze: AulaN10, LaboratorioCampus, Biblioteca
+Buie: AulaN11 lanterna
+Bloccate: Atrio nord passepartout
+Inizio: Atrio
+Vincente: Biblioteca
+Attrezzi: lanterna 3 AulaN10, pc 2 LaboratorioCampus, osso 1 AulaN11
+Uscite: Atrio nord Biblioteca, Atrio est AulaN11, Atrio sud AulaN10, Atrio ovest LaboratorioCampus, AulaN11 est LaboratorioCampus, AulaN11 ovest Atrio, AulaN10 nord Atrio, AulaN10 est AulaN11, AulaN10 ovest LaboratorioCampus, LaboratorioCampus est Atrio, LaboratorioCampus ovest AulaN11, Biblioteca sud Atrio
+Personaggi: cane Buddy Atrio passepartout 1 osso, mago Saruman LaboratorioCampus, strega Kureha AulaN10
